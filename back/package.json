@@ -1,11 +1,26 @@
 {
-  "name": "back",
-  "version": "1.0.0",
-  "description": "Backend for my website",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Harsh Garg",
-  "license": "ISC"
+    "name": "back",
+    "version": "1.0.0",
+    "description": "Backend for my website",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon index.js"
+    },
+    "author": "Harsh Garg",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.6",
+        "dotenv": "^17.2.3",
+        "express": "^5.2.1",
+        "mongoose": "^9.1.5"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.39.2",
+        "eslint": "^9.39.2",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-prettier": "^5.5.5",
+        "globals": "^17.1.0",
+        "nodemon": "^3.1.11",
+        "prettier": "^3.8.1"
+    }
 }
