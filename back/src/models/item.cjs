@@ -16,6 +16,15 @@ const itemSchema = new mongoose.Schema(
             type: [ItemAttributeSchema],
             default: [],
         },
+        subItems: {
+            type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Item" }],
+            default: [],
+        },
+        isPacked: {
+            type: Boolean,
+            default: false,
+            required: true,
+        },
     },
     { timestamps: true },
 );
