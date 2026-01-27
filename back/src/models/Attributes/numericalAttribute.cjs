@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Attribute = require("./attribute");
+const Attribute = require("./attribute.cjs");
 
 const numericalAttributeSchema = new mongoose.Schema({
     min: { type: Number, required: false },
