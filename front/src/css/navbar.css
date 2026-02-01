@@ -1,0 +1,13 @@
+nav {
+    justify-content: center;
+    display: flex;
+}
+
+nav .navBar {
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+    gap: 15px;
+}

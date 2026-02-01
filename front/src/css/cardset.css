@@ -1,0 +1,13 @@
+.card-set {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 20px 0;
+    background-color: #f9f9f9;
+}
+
+.card-set button {
+    border: none;
+    height: 100%;
+}
