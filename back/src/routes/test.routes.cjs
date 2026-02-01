@@ -4,6 +4,7 @@ const router = express.Router();
 const SelectAttribute = require("../models/Attributes/selectAttribute.cjs");
 const NumericalAttribute = require("../models/Attributes/numericalAttribute.cjs");
 const BinaryAttribute = require("../models/Attributes/binaryAttribute.cjs");
+const Attribute = require("../models/Attributes/attribute.cjs");
 
 const Item = require("../models/item.cjs");
 
@@ -121,6 +122,62 @@ router.post("/item", async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: error.message });
+    }
+});
+
+router.get("/attributes", async (_req, res) => {
+    try {
+        const attrs = await Attribute.find().populate("requires").exec();
+        res.status(200).json(attrs);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+router.get("/attributes/:id", async (req, res) => {
+    try {
+        const attr = await Attribute.findById(req.params.id)
+            .populate("requires")
+            .exec();
+        if (!attr) {
+            return res.status(404).json({ error: "Select Attribute not found" });
+        }
+        res.status(200).json(attr);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+router.get("/items", async (_req, res) => {
+    try {
+        const items = await Item.find({ hasParent: false })
+            .populate({ path: "attributes", populate: { path: "requires" } })
+            .populate({
+                path: "subItems",
+                populate: { path: "attributes", populate: { path: "requires" } },
+            })
+            .exec();
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+router.get("/items/:id", async (req, res) => {
+    try {
+        const item = await Item.find({ _id: req.params.id, hasParent: false })
+            .populate({ path: "attributes", populate: { path: "requires" } })
+            .populate({
+                path: "subItems",
+                populate: { path: "attributes", populate: { path: "requires" } },
+            })
+            .exec();
+        if (!item) {
+            return res.status(404).json({ error: "Item not found" });
+        }
+        res.status(200).json(item);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 
