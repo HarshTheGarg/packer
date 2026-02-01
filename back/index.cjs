@@ -31,8 +31,10 @@ app.use(cors({ origin: "http://localhost", credentials: true }));
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-const testRoutes = require("./src/routes/test.routes.cjs");
-app.use("/api/v1.0/tests", testRoutes);
+if (process.env.ENV === "PRODUCTION") {
+    const testRoutes = require("./src/routes/test.routes.cjs");
+    app.use("/api/v1.0/tests", testRoutes);
+}
 
 // Start the server
 app.listen(port, () => {
