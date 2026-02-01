@@ -127,7 +127,9 @@ router.post("/item", async (req, res) => {
 
 router.get("/attributes", async (_req, res) => {
     try {
-        const attrs = await Attribute.find().populate("requires").exec();
+        const attrs = await Attribute.find({}, { createdAt: 0, updatedAt: 0 })
+            .populate("requires")
+            .exec();
         res.status(200).json(attrs);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -136,7 +138,10 @@ router.get("/attributes", async (_req, res) => {
 
 router.get("/attributes/:id", async (req, res) => {
     try {
-        const attr = await Attribute.findById(req.params.id)
+        const attr = await Attribute.find(
+            { _id: req.params.id },
+            { createdAt: 0, updatedAt: 0 },
+        )
             .populate("requires")
             .exec();
         if (!attr) {
@@ -150,7 +155,10 @@ router.get("/attributes/:id", async (req, res) => {
 
 router.get("/items", async (_req, res) => {
     try {
-        const items = await Item.find({ hasParent: false })
+        const items = await Item.find(
+            { hasParent: false },
+            { createdAt: 0, updatedAt: 0 },
+        )
             .populate({ path: "attributes", populate: { path: "requires" } })
             .populate({
                 path: "subItems",
@@ -165,7 +173,10 @@ router.get("/items", async (_req, res) => {
 
 router.get("/items/:id", async (req, res) => {
     try {
-        const item = await Item.find({ _id: req.params.id, hasParent: false })
+        const item = await Item.find(
+            { _id: req.params.id, hasParent: false },
+            { createdAt: 0, updatedAt: 0 },
+        )
             .populate({ path: "attributes", populate: { path: "requires" } })
             .populate({
                 path: "subItems",
