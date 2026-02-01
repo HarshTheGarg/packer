@@ -26,7 +26,7 @@ connectToDatabase()
     });
 
 // Enable CORS for all routes
-app.use(cors({ origin: "http://localhost", credentials: true }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
