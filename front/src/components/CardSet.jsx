@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import Card from "./Card";
-import Modal from "./Modal";
 import AddItemModal from "./AddItemModal";
+import AddAttributeModal from "./AddAttributeModal";
 
 import "../css/cardset.css";
 
@@ -37,9 +37,10 @@ const CardSet = ({ items, attributes }) => {
                     ))}
                     <Card isAddNew={true} onClick={openModal} thingToAdd="attribute" />
                 </div>
-                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <h2>Add Attribute</h2>
-                </Modal>
+                <AddAttributeModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                />
             </>
         );
     }
