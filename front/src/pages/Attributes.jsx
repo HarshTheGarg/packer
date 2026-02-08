@@ -24,7 +24,7 @@ const Attributes = () => {
             <div className="header">
                 <h1>Attributes</h1>
             </div>
-            <CardSet attributes={attributes} />
+            <CardSet attributes={attributes} setAttributes={setAttributes} />
         </div>
     );
 };

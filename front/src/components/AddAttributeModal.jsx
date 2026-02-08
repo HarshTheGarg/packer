@@ -5,7 +5,9 @@ import AddOptionAttribute from "./attributes/AddOptionAttribute";
 import AddNumericalAttribute from "./attributes/AddNumericalAttribute";
 import AddBinaryAttribute from "./attributes/AddBinaryAttribute";
 
-const AddAttributeModal = ({ isOpen, onClose }) => {
+const AddAttributeModal = ({ isOpen, onClose, attributes, setAttributes }) => {
+    const [error, setError] = useState("");
+
     // Common values
     const [attributeName, setAttributeName] = useState("");
     const [description, setDescription] = useState("");
@@ -32,26 +34,97 @@ const AddAttributeModal = ({ isOpen, onClose }) => {
         setCurrentOption("");
     };
 
-    // Current attributes fetched from the backend
-    const [attributes, setAttributes] = useState([]);
-    useEffect(() => {
-        const fetchAttributes = async () => {
-            const endpoint = import.meta.env.VITE_API_ENDPOINT;
-            try {
-                const response = await fetch(`${endpoint}/attributes`);
-                const items = await response.json();
-                setAttributes(items);
-            } catch (error) {
-                console.error("Error fetching attributes:", error);
-            }
-        };
-        fetchAttributes();
-    }, []);
-
-    const submitForm = (e) => {
+    const submitForm = async (e) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log({ attributeName, description, type, requires });
+        if (attributeName.trim() === "") {
+            setError("Attribute name is required.");
+            console.log(error);
+            return;
+        }
+
+        if (type === "") {
+            setError("Attribute type is required.");
+            console.log(error);
+            return;
+        }
+
+        const newAttribute = {
+            name: attributeName,
+            description,
+            requires,
+        };
+
+        let response;
+
+        if (type === "options") {
+            newAttribute.options = optionsList;
+            newAttribute.allowMultiple = allowMultiple;
+
+            response = await fetch(
+                `${import.meta.env.VITE_API_ENDPOINT}/select-attributes`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newAttribute),
+                },
+            );
+        } else if (type === "numerical") {
+            newAttribute.minValue = minValue;
+            newAttribute.maxValue = maxValue;
+            newAttribute.unit = unit;
+
+            response = await fetch(
+                `${import.meta.env.VITE_API_ENDPOINT}/numerical-attribute`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newAttribute),
+                },
+            );
+        } else if (type === "binary") {
+            newAttribute.trueLabel = trueLabel;
+            newAttribute.falseLabel = falseLabel;
+
+            response = await fetch(
+                `${import.meta.env.VITE_API_ENDPOINT}/binary-attribute`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newAttribute),
+                },
+            );
+        }
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            setError(errorData.message || "Failed to create attribute.");
+            console.log(errorData);
+            return;
+        }
+
+        const createdAttribute = await response.json();
+        setAttributes([...attributes, createdAttribute]);
+
+        onClose();
+        console.log("New Attribute:", newAttribute);
+        setAttributeName("");
+        setDescription("");
+        setType("");
+        setRequires([]);
+        setOptions([]);
+        setCurrentOption("");
+        setAllowMultiple(false);
+        setMinValue(0);
+        setMaxValue(100);
+        setUnit("Units");
+        setTrueLabel("Yes");
+        setFalseLabel("No");
     };
 
     const requiredChange = (e) => {
@@ -75,7 +148,6 @@ const AddAttributeModal = ({ isOpen, onClose }) => {
                         id="attributeName"
                         type="text"
                         name="attributeName"
-                        required
                         value={attributeName}
                         onChange={(e) => setAttributeName(e.target.value)}
                     />
