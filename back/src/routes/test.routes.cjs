@@ -12,9 +12,7 @@ const Item = require("../models/item.cjs");
 router.post("/select-attributes", async (req, res) => {
     try {
         const attr = new SelectAttribute({
-            name: req.body.name,
-            options: req.body.options,
-            allowMultiple: req.body.allowMultiple,
+            ...req.body,
         });
         const savedAttr = await attr.save();
         res.status(201).json(savedAttr);
