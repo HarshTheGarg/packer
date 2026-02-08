@@ -11,14 +11,14 @@ const AddAttributeModal = ({ isOpen, onClose }) => {
     const [requires, setRequires] = useState([]);
 
     // Options specific values
-    const [options, setOptions] = useState([]);
-    const [option, setOption] = useState("");
+    const [optionsList, setOptions] = useState([]);
+    const [currentOption, setCurrentOption] = useState("");
     const [allowMultiple, setAllowMultiple] = useState(false);
 
-    const addOption = (e) => {
+    const addToOptionsList = (e) => {
         e.preventDefault();
-        setOptions([...options, option]);
-        setOption("");
+        setOptions([...optionsList, currentOption]);
+        setCurrentOption("");
     };
 
     // Current attributes fetched from the backend
@@ -113,10 +113,10 @@ const AddAttributeModal = ({ isOpen, onClose }) => {
 
                 {type === "options" && (
                     <AddOptionAttribute
-                        option={option}
-                        setOption={setOption}
-                        options={options}
-                        addOption={addOption}
+                        currentOption={currentOption}
+                        setCurrentOption={setCurrentOption}
+                        optionsList={optionsList}
+                        addToOptionsList={addToOptionsList}
                         allowMultiple={allowMultiple}
                         setAllowMultiple={setAllowMultiple}
                     />

@@ -1,8 +1,8 @@
 const AddOptionAttribute = ({
-    option,
-    setOption,
-    options,
-    addOption,
+    currentOption,
+    setCurrentOption,
+    optionsList,
+    addToOptionsList,
     allowMultiple,
     setAllowMultiple,
 }) => {
@@ -14,15 +14,15 @@ const AddOptionAttribute = ({
                     type="text"
                     name="option"
                     id="option"
-                    value={option}
+                    value={currentOption}
                     onChange={(e) => {
-                        setOption(e.target.value);
+                        setCurrentOption(e.target.value);
                     }}
                 />
-                <button onClick={addOption}>Add Option</button>
-                {options.length > 0 && (
+                <button onClick={addToOptionsList}>Add Option</button>
+                {optionsList.length > 0 && (
                     <ul>
-                        {options.map((opt, index) => (
+                        {optionsList.map((opt, index) => (
                             <li key={index}>{opt}</li>
                         ))}
                     </ul>
