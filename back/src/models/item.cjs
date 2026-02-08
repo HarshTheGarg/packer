@@ -12,6 +12,15 @@ const itemSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
+        keywords: {
+            type: [String],
+            default: [],
+            required: false,
+        },
+        notes: {
+            type: String,
+            required: false,
+        },
         attributes: {
             type: [ItemAttributeSchema],
             default: [],
