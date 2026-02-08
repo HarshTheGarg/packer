@@ -2,18 +2,29 @@ import { useState, useEffect } from "react";
 
 import Modal from "./Modal";
 import AddOptionAttribute from "./attributes/AddOptionAttribute";
+import AddNumericalAttribute from "./attributes/AddNumericalAttribute";
+import AddBinaryAttribute from "./attributes/AddBinaryAttribute";
 
 const AddAttributeModal = ({ isOpen, onClose }) => {
     // Common values
     const [attributeName, setAttributeName] = useState("");
     const [description, setDescription] = useState("");
-    const [type, setType] = useState("options");
+    const [type, setType] = useState("");
     const [requires, setRequires] = useState([]);
 
     // Options specific values
     const [optionsList, setOptions] = useState([]);
     const [currentOption, setCurrentOption] = useState("");
     const [allowMultiple, setAllowMultiple] = useState(false);
+
+    // Numerical specific values
+    const [minValue, setMinValue] = useState(0);
+    const [maxValue, setMaxValue] = useState(100);
+    const [unit, setUnit] = useState("Units");
+
+    // Binary specific values
+    const [trueLabel, setTrueLabel] = useState("Yes");
+    const [falseLabel, setFalseLabel] = useState("No");
 
     const addToOptionsList = (e) => {
         e.preventDefault();
@@ -87,6 +98,7 @@ const AddAttributeModal = ({ isOpen, onClose }) => {
                         onChange={(e) => setType(e.target.value)}
                         value={type}
                     >
+                        <option value="">Select</option>
                         <option value="options">Options</option>
                         <option value="numerical">Numerical</option>
                         <option value="binary">Binary</option>
@@ -121,6 +133,27 @@ const AddAttributeModal = ({ isOpen, onClose }) => {
                         setAllowMultiple={setAllowMultiple}
                     />
                 )}
+
+                {type === "numerical" && (
+                    <AddNumericalAttribute
+                        minValue={minValue}
+                        setMinValue={setMinValue}
+                        maxValue={maxValue}
+                        setMaxValue={setMaxValue}
+                        unit={unit}
+                        setUnit={setUnit}
+                    />
+                )}
+
+                {type === "binary" && (
+                    <AddBinaryAttribute
+                        trueLabel={trueLabel}
+                        falseLabel={falseLabel}
+                        setTrueLabel={setTrueLabel}
+                        setFalseLabel={setFalseLabel}
+                    />
+                )}
+
                 <button type="submit">Add Attribute</button>
             </form>
         </Modal>
