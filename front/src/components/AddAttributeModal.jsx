@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Modal from "./Modal";
 import AddOptionAttribute from "./attributes/AddOptionAttribute";
