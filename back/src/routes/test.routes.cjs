@@ -110,6 +110,8 @@ router.post("/item", async (req, res) => {
             const item = new Item({
                 name: req.body.name,
                 description: req.body?.description,
+                keywords: req.body?.keywords,
+                notes: req.body?.notes,
                 attributes: req.body?.attributes,
                 isPacked: req.body?.isPacked,
                 hasParent: false,
@@ -125,9 +127,7 @@ router.post("/item", async (req, res) => {
 
 router.get("/attributes", async (_req, res) => {
     try {
-        const attrs = await Attribute.find({}, { createdAt: 0, updatedAt: 0 })
-            .populate("requires")
-            .exec();
+        const attrs = await Attribute.find({}, { createdAt: 0, updatedAt: 0 });
         res.status(200).json(attrs);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -157,10 +157,10 @@ router.get("/items", async (_req, res) => {
             { hasParent: false },
             { createdAt: 0, updatedAt: 0 },
         )
-            .populate({ path: "attributes", populate: { path: "requires" } })
+            .populate({ path: "attributes.attribute" })
             .populate({
                 path: "subItems",
-                populate: { path: "attributes", populate: { path: "requires" } },
+                populate: { path: "attributes.attribute" },
             })
             .exec();
         res.status(200).json(items);
