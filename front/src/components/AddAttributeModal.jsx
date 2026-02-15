@@ -84,8 +84,8 @@ const AddAttributeModal = ({ isOpen, onClose, attributes, setAttributes }) => {
                 },
             );
         } else if (type === "binary") {
-            newAttribute.trueLabel = trueLabel;
-            newAttribute.falseLabel = falseLabel;
+            newAttribute.truthyLabel = trueLabel;
+            newAttribute.falsyLabel = falseLabel;
 
             response = await fetch(
                 `${import.meta.env.VITE_API_ENDPOINT}/binary-attribute`,
