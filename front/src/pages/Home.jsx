@@ -26,7 +26,7 @@ const Home = () => {
                 <h1>Items</h1>
             </div>
             <div className="filters">Filters</div>
-            <CardSet items={items} />
+            <CardSet items={items} setItems={setItems} />
         </div>
     );
 };

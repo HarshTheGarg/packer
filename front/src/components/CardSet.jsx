@@ -6,7 +6,7 @@ import AddAttributeModal from "./AddAttributeModal";
 
 import "../css/cardset.css";
 
-const CardSet = ({ items, attributes, setAttributes }) => {
+const CardSet = ({ items, setItems, attributes, setAttributes }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -24,6 +24,7 @@ const CardSet = ({ items, attributes, setAttributes }) => {
                 </div>
                 <AddItemModal
                     isOpen={isModalOpen}
+                    setItems={setItems}
                     onClose={() => setIsModalOpen(false)}
                 />
             </>
@@ -44,7 +45,6 @@ const CardSet = ({ items, attributes, setAttributes }) => {
                 <AddAttributeModal
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
-                    attributes={attributes}
                     setAttributes={setAttributes}
                 />
             </>
