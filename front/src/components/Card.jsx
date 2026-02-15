@@ -1,6 +1,6 @@
 import "../css/card.css";
 
-const Card = ({ isAddNew = false, onClick, thingToAdd, props }) => {
+const Card = ({ isAddNew = false, onClick, cardType, ...props }) => {
     return (
         <div
             className="card"
@@ -9,11 +9,21 @@ const Card = ({ isAddNew = false, onClick, thingToAdd, props }) => {
             }}
         >
             {isAddNew ? (
-                <h2>Add New {thingToAdd}</h2>
+                <h2>Add New {cardType}</h2>
             ) : (
                 <>
-                    <h2>{props.name}</h2>
-                    <p>{props._id}</p>
+                    {cardType === "item" && (
+                        <>
+                            <h2>{props.item.name}</h2>
+                            <p>{props.item.description}</p>
+                        </>
+                    )}
+                    {cardType === "attribute" && (
+                        <>
+                            <h2>{props.attribute.name}</h2>
+                            <p>{props.attribute.type}</p>
+                        </>
+                    )}
                 </>
             )}
         </div>

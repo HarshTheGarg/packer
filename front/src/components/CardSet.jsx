@@ -18,9 +18,9 @@ const CardSet = ({ items, attributes, setAttributes }) => {
             <>
                 <div className="card-set">
                     {items.map((item) => (
-                        <Card key={item._id} props={item} />
+                        <Card key={item._id} item={item} cardType="item" />
                     ))}
-                    <Card isAddNew={true} onClick={openModal} thingToAdd="item" />
+                    <Card isAddNew={true} onClick={openModal} cardType="item" />
                 </div>
                 <AddItemModal
                     isOpen={isModalOpen}
@@ -33,9 +33,13 @@ const CardSet = ({ items, attributes, setAttributes }) => {
             <>
                 <div className="card-set">
                     {attributes.map((attribute) => (
-                        <Card key={attribute._id} props={attribute} />
+                        <Card
+                            key={attribute._id}
+                            attribute={attribute}
+                            cardType="attribute"
+                        />
                     ))}
-                    <Card isAddNew={true} onClick={openModal} thingToAdd="attribute" />
+                    <Card isAddNew={true} onClick={openModal} cardType="attribute" />
                 </div>
                 <AddAttributeModal
                     isOpen={isModalOpen}
