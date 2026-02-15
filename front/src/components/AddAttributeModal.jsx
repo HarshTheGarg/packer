@@ -5,7 +5,7 @@ import AddOptionAttribute from "./attributes/AddOptionAttribute";
 import AddNumericalAttribute from "./attributes/AddNumericalAttribute";
 import AddBinaryAttribute from "./attributes/AddBinaryAttribute";
 
-const AddAttributeModal = ({ isOpen, onClose, attributes, setAttributes }) => {
+const AddAttributeModal = ({ isOpen, onClose, setAttributes }) => {
     const [error, setError] = useState("");
 
     // Common values
@@ -107,7 +107,7 @@ const AddAttributeModal = ({ isOpen, onClose, attributes, setAttributes }) => {
         }
 
         const createdAttribute = await response.json();
-        setAttributes([...attributes, createdAttribute]);
+        setAttributes((prev) => [...prev, createdAttribute]);
 
         onClose();
         console.log("New Attribute:", newAttribute);
