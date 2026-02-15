@@ -77,17 +77,6 @@ itemSchema.pre("validate", async function() {
                     );
                 }
 
-                // Check if the entry has requires array defined, and the attributes defined in it are present in the item's attributes
-                if (attribute.requires && attribute.requires.length > 0) {
-                    for (const reqAttrId of attribute.requires) {
-                        if (!ids.has(reqAttrId.toString())) {
-                            return new Error(
-                                `Attribute ${attribute.name} requires attribute with ID ${reqAttrId} to be present`,
-                            );
-                        }
-                    }
-                }
-
                 // Validate based on attribute type
                 switch (attribute.type) {
                     case "NumberAttribute": {

@@ -12,7 +12,6 @@ const AddAttributeModal = ({ isOpen, onClose, attributes, setAttributes }) => {
     const [attributeName, setAttributeName] = useState("");
     const [description, setDescription] = useState("");
     const [type, setType] = useState("");
-    const [requires, setRequires] = useState([]);
 
     // Options specific values
     const [optionsList, setOptions] = useState([]);
@@ -51,7 +50,6 @@ const AddAttributeModal = ({ isOpen, onClose, attributes, setAttributes }) => {
         const newAttribute = {
             name: attributeName,
             description,
-            requires,
         };
 
         let response;
@@ -116,7 +114,6 @@ const AddAttributeModal = ({ isOpen, onClose, attributes, setAttributes }) => {
         setAttributeName("");
         setDescription("");
         setType("");
-        setRequires([]);
         setOptions([]);
         setCurrentOption("");
         setAllowMultiple(false);
@@ -125,17 +122,6 @@ const AddAttributeModal = ({ isOpen, onClose, attributes, setAttributes }) => {
         setUnit("Units");
         setTrueLabel("Yes");
         setFalseLabel("No");
-    };
-
-    const requiredChange = (e) => {
-        const value = e.target.value;
-        const isChecked = e.target.checked;
-
-        if (isChecked) {
-            setRequires([...requires, value]);
-        } else {
-            setRequires(requires.filter((req) => req !== value));
-        }
     };
 
     return (
@@ -175,24 +161,6 @@ const AddAttributeModal = ({ isOpen, onClose, attributes, setAttributes }) => {
                         <option value="numerical">Numerical</option>
                         <option value="binary">Binary</option>
                     </select>
-                </div>
-
-                <div>
-                    <div>Attributes Required:</div>
-                    {attributes.map((attribute) => (
-                        <div key={attribute._id}>
-                            <label htmlFor={attribute._id}>{attribute.name}</label>
-                            <input
-                                type="checkbox"
-                                name="requires"
-                                value={attribute._id}
-                                id={attribute._id}
-                                onChange={(e) => {
-                                    requiredChange(e);
-                                }}
-                            />
-                        </div>
-                    ))}
                 </div>
 
                 {type === "options" && (
