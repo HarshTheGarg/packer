@@ -15,7 +15,15 @@ const Card = ({ isAddNew = false, onClick, cardType, ...props }) => {
                     {cardType === "item" && (
                         <>
                             <h2>{props.item.name}</h2>
-                            <p>{props.item.description}</p>
+                            {props.item.attributes &&
+                                props.item.attributes.length > 0 &&
+                                props.item.attributes.map((attr) => {
+                                    return (
+                                        <p key={attr._id}>
+                                            {attr.attribute.name}: {attr.value}
+                                        </p>
+                                    );
+                                })}
                         </>
                     )}
                     {cardType === "attribute" && (
